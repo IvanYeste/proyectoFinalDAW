@@ -23,14 +23,13 @@ body {
   width: 100%;
 }
 header {
-  background-color: #0074D9;
-  color: white;
-  padding: 20px;
+  background: linear-gradient(90deg, #004AAD, #0088CC);
+  padding: 15px 20px;
   display: flex;
   align-items: center;
-  border-top-left-radius: 50px;
-  border-top-right-radius: 50px;
-
+  justify-content: space-between;
+  border-radius: 20px 20px 0px 0px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 .sesion-iniciada {
   text-align: center;
@@ -272,18 +271,30 @@ footer {
   color: #666;
   line-height: 1.6;
 }
-  table {
-    width: 100%;
-    border-collapse: collapse;
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
 }
-th, td {
-    padding: 1px;
-    border: solid 1px black;
-    text-align: left;
-}
+
 th {
-    background-color: #0074D9;
-    color: white; 
+  background: #004AAD;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+  background: #f2f2f2;
 }
 .carousel-container {
   margin: 0 auto;
