@@ -12,8 +12,7 @@
 
     <div class="imageContainer">
     <div class="content">
-        
-    <?php include("../php/notificaciones.php");?>
+
     <header>
     <div class="logo-container">
         <img src="../src/logo.png" width="150px" height="150px" alt="Logo" id="logo">
@@ -28,14 +27,16 @@
             <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="../php/menu_admin.php">Gestión</a></li>
         </ul>
     </nav>
+    <?php
+            if(isset($_COOKIE["nombre"])) {
+                include("notificaciones.php");
+            }
+    ?>
     <div class="sesion-container">
-        <?php
-            include("../php/notificaciones.php");
-        ?>
         <div class="sesion-iniciada">
             <p>Bienvenido <?php echo $_COOKIE["nombre"]; ?></p>
             <i class='bx bxs-user-circle'></i>
-            <form action='index.php' method='post'>
+            <form action='../index.php' method='post'>
                 <input type='submit' id='cerrar_sesion' name='cerrar_sesion' value='Cerrar Sesión'>
             </form>
            
@@ -269,7 +270,7 @@ if(isset($_POST["submit_id"])){
     </div>
     </div>
 
-    <script src="js/menu_trabajador.js"></script>
+    <script src="../js/menu_trabajador.js"></script>
 </body>
 </html>
 <?php

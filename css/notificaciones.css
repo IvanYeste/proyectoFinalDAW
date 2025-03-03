@@ -3,6 +3,8 @@
     position: absolute;
     top: 20px; /* Agregamos un poco de espacio desde la parte superior */
     right: 20px; /* Agregamos un poco de espacio desde el lado derecho */
+    z-index: 1000; /* Mayor que el formulario */
+
   }
   
   
@@ -18,6 +20,8 @@
     color: #333333; /* Color de texto */
     padding: 20px; /* Agregamos espacio interno */
     text-align: center; /* Alineamos el texto al centro */
+    z-index: 1000; /* Mayor que el formulario */
+
   }
   
   .icon-button  {

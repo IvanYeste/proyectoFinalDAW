@@ -106,7 +106,7 @@ function cerrarSesion(){
     </div>
     <nav>
         <ul>
-            <li><a id="inicio" href="php/index.php">Inicio</a></li>
+            <li><a id="inicio" href="index.php">Inicio</a></li>
             <li><a href="php/contacto.php">Contacto</a></li>
             <li><a id="reservaOnline" href="php/reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
             <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2)  ? '' : 'oculto'; ?>"><a id="reservas" href="php/reservas.php">Plazas Reservadas</a></li>
@@ -117,16 +117,13 @@ function cerrarSesion(){
     </nav>
     <div class="sesion-container">
     <?php
-        
-        
         // Verificar si el usuario ha iniciado sesión
         if(isset($_COOKIE["nombre"])) {
-            include("php/notificaciones.php");
         ?>
         <div class="sesion-iniciada">
             <p>Bienvenido <?php echo $_COOKIE["nombre"]; ?></p>
             <i class='bx bxs-user-circle'></i>
-            <form action='php/index.php' method='post'>
+            <form action='index.php' method='post'>
                 <input type='submit' id='cerrar_sesion' name='cerrar_sesion' value='Cerrar Sesión'>
             </form>
            
@@ -156,7 +153,7 @@ function cerrarSesion(){
                     <div class="modal-content">
                         <span class="close">&times;</span>
                         <h2>Registro</h2>
-                        <form id="registro-form" action='php/index.php' method='post'>
+                        <form id="registro-form" action='index.php' method='post'>
                             <div class="form-group">
                                 <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
                                 <label for="nombre"><i class="bx bx-user"></i></label>
