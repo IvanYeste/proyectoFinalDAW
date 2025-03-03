@@ -1,0 +1,83 @@
+#ContenedorNotificaciones {
+    height: 100%;
+    position: absolute;
+    top: 20px; /* Agregamos un poco de espacio desde la parte superior */
+    right: 20px; /* Agregamos un poco de espacio desde el lado derecho */
+  }
+  
+  
+
+#notificaciones {
+    width: 300px;
+    height: 100%;   
+    background-color: #ffffff; /* Color azul para que coincida con la estética de la página */
+    border-radius: 10px; /* Redondeamos las esquinas */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Agregamos una sombra suave */
+    position: absolute;
+    display: none;
+    color: #333333; /* Color de texto */
+    padding: 20px; /* Agregamos espacio interno */
+    text-align: center; /* Alineamos el texto al centro */
+  }
+  
+  .icon-button  {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    color: #333333;
+    background: #ffffff;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .icon-button__badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 25px;
+    height: 25px;
+    background: red;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    display: none;
+  }
+  
+  .icon-button:hover {
+    cursor: pointer;
+  }
+  
+  .icon-button:active {
+    background: #cccccc;
+  }
+  
+  .animacionMostrar {
+    animation:mostrar 0.5s ease forwards;
+  }
+  
+  .animacionOcultar {
+    animation: ocultar 0.5s ease forwards;
+  }
+  @keyframes mostrar {
+    from {
+      right: -300px;
+    }
+    to {
+      right: -40px;
+    }
+  }
+  
+  @keyframes ocultar {
+    from {
+      right: -40px;
+    }
+    to {
+      right: -400px;
+    }
+  }
