@@ -8,7 +8,7 @@ body {
 
 .imageContainer {
   padding: 50px; /* Agrega espacio alrededor del contenido */
-  background-image: url("src/Morella_panoramica_1.jpg");
+  background-image: url("../src/Morella_panoramica_1.jpg");
   background-size: cover; /* Ajusta la imagen de fondo al tamaño del contenedor */
   background-repeat: no-repeat; /* Evita que la imagen de fondo se repita */
   height: 100vh; /* Ajusta el tamaño del cuerpo al tamaño de la ventana del navegador */

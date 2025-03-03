@@ -3,7 +3,7 @@ function cerrarSesion(){
         setcookie("nombre", "", time() - 3600);
         setcookie("id", "", time() - 3600);
         setcookie("admin", "", time() - 3600);
-        header("Location: php/index.php");
+        header("Location:index.php");
         exit(); // Añadido para asegurar que se detenga la ejecución después de la redirección
     }
 
@@ -40,7 +40,7 @@ function cerrarSesion(){
                     if ($Rtipo == 2){
                         setcookie("admin", 2, time()+3600);
                     }
-                    header("Location: php/index.php");
+                    header("Location:index.php");
                     exit(); // Añadido para detener la ejecución después de la redirección
                 } else {
                     echo "<script>alert('Contraseña incorrecta');</script>";
@@ -81,7 +81,7 @@ function cerrarSesion(){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css\index.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script>
         // Esta función verifica si el usuario está registrado y muestra la alerta si no lo está
@@ -282,7 +282,7 @@ function cerrarSesion(){
     </footer>
     </div>
     </div>
-    <script src="js/index.js"></script>
+    <script src="js\index.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"></script>
 
 </body>

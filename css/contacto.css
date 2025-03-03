@@ -6,7 +6,7 @@ body {
 
 .imageContainer {
   padding: 50px;
-  background-image: url("src/Morella_panoramica_1.jpg");
+  background-image: url("../src/Morella_panoramica_1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   height: 100vh;

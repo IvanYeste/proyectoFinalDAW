@@ -38,7 +38,7 @@ $mysqli = new mysqli("localhost", "root", "", "parking");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/reservaOnline.css">
+    <link rel="stylesheet" href="../css/reservaOnline.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
@@ -47,21 +47,21 @@ $mysqli = new mysqli("localhost", "root", "", "parking");
     <div class="content">
     <header>
     <div class="logo-container">
-        <img src="src/logo.png" width="150px" height="150px" alt="Logo" id="logo">
+        <img src="../src/logo.png" width="150px" height="150px" alt="Logo" id="logo">
     </div>
     <nav>
         <ul>
-            <li><a id="inicio" href="php/index.php">Inicio</a></li>
-            <li><a href="php/contacto.php">Contacto</a></li>
-            <li><a id="reservaOnline" href="php/reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
-            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2)  ? '' : 'oculto'; ?>"><a id="reservas" href="php/reservas.php">Plazas Reservadas</a></li>
-            <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 0) ? '' : 'oculto'; ?>"><a id="menu_trabajador" href="php/menu_trabajador.php">Horario</a></li>
-            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="php/menu_admin.php">Gestión</a></li>
+            <li><a id="inicio" href="../index.php">Inicio</a></li>
+            <li><a href="../php/contacto.php">Contacto</a></li>
+            <li><a id="reservaOnline" href="../php/reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
+            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2)  ? '' : 'oculto'; ?>"><a id="reservas" href="../php/reservas.php">Plazas Reservadas</a></li>
+            <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 0) ? '' : 'oculto'; ?>"><a id="menu_trabajador" href="../php/menu_trabajador.php">Horario</a></li>
+            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="../php/menu_admin.php">Gestión</a></li>
         </ul>
     </nav>
     <div class="sesion-container">
         <?php
-            include("php/notificaciones.php");
+            include("../php/notificaciones.php");
         ?>
         <div class="sesion-iniciada">
             <p>Bienvenido <?php echo $_COOKIE["nombre"]; ?></p>
