@@ -3,7 +3,7 @@ function cerrarSesion(){
         setcookie("nombre", "", time() - 3600);
         setcookie("id", "", time() - 3600);
         setcookie("admin", "", time() - 3600);
-        header("Location: index.php");
+        header("Location: php/index.php");
         exit(); // Añadido para asegurar que se detenga la ejecución después de la redirección
     }
 
@@ -40,7 +40,7 @@ function cerrarSesion(){
                     if ($Rtipo == 2){
                         setcookie("admin", 2, time()+3600);
                     }
-                    header("Location: index.php");
+                    header("Location: php/index.php");
                     exit(); // Añadido para detener la ejecución después de la redirección
                 } else {
                     echo "<script>alert('Contraseña incorrecta');</script>";
@@ -81,7 +81,7 @@ function cerrarSesion(){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="css/index.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script>
         // Esta función verifica si el usuario está registrado y muestra la alerta si no lo está
@@ -106,12 +106,12 @@ function cerrarSesion(){
     </div>
     <nav>
         <ul>
-            <li><a id="inicio" href="index.php">Inicio</a></li>
-            <li><a href="contacto.php">Contacto</a></li>
-            <li><a id="reservaOnline" href="reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
-            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2)  ? '' : 'oculto'; ?>"><a id="reservas" href="reservas.php">Plazas Reservadas</a></li>
-            <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 0) ? '' : 'oculto'; ?>"><a id="menu_trabajador" href="menu_trabajador.php">Horario</a></li>
-            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="menu_admin.php">Gestión</a></li>
+            <li><a id="inicio" href="php/index.php">Inicio</a></li>
+            <li><a href="php/contacto.php">Contacto</a></li>
+            <li><a id="reservaOnline" href="php/reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
+            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2)  ? '' : 'oculto'; ?>"><a id="reservas" href="php/reservas.php">Plazas Reservadas</a></li>
+            <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 0) ? '' : 'oculto'; ?>"><a id="menu_trabajador" href="php/menu_trabajador.php">Horario</a></li>
+            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="php/menu_admin.php">Gestión</a></li>
 
         </ul>
     </nav>
@@ -121,12 +121,12 @@ function cerrarSesion(){
         
         // Verificar si el usuario ha iniciado sesión
         if(isset($_COOKIE["nombre"])) {
-            include("notificaciones.php");
+            include("php/notificaciones.php");
         ?>
         <div class="sesion-iniciada">
             <p>Bienvenido <?php echo $_COOKIE["nombre"]; ?></p>
             <i class='bx bxs-user-circle'></i>
-            <form action='index.php' method='post'>
+            <form action='php/index.php' method='post'>
                 <input type='submit' id='cerrar_sesion' name='cerrar_sesion' value='Cerrar Sesión'>
             </form>
            
@@ -156,7 +156,7 @@ function cerrarSesion(){
                     <div class="modal-content">
                         <span class="close">&times;</span>
                         <h2>Registro</h2>
-                        <form id="registro-form" action='index.php' method='post'>
+                        <form id="registro-form" action='php/index.php' method='post'>
                             <div class="form-group">
                                 <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
                                 <label for="nombre"><i class="bx bx-user"></i></label>
@@ -282,7 +282,7 @@ function cerrarSesion(){
     </footer>
     </div>
     </div>
-    <script src="index.js"></script>
+    <script src="js/index.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"></script>
 
 </body>

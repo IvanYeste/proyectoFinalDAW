@@ -38,7 +38,7 @@
                     $stmt_delete_horarios->close();
                     $stmt_delete_solicitudes->close();
                     $stmt_delete_usuario->close();
-                    header("Location: menu_admin.php");
+                    header("Location: php/menu_admin.php");
                     $conn->close();
                 }
                
@@ -75,7 +75,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="menu_admin.css">
+    <link rel="stylesheet" href="css/menu_admin.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 
@@ -89,17 +89,17 @@
     </div>
     <nav>
         <ul>
-            <li><a id="inicio" href="index.php">Inicio</a></li>
-            <li><a href="contacto.php">Contacto</a></li>
-            <li><a id="reservaOnline" href="reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
-            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2)  ? '' : 'oculto'; ?>"><a id="reservas" href="reservas.php">Plazas Reservadas</a></li>
-            <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 0) ? '' : 'oculto'; ?>"><a id="menu_trabajador" href="menu_trabajador.php">Horario</a></li>
-            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="menu_admin.php">Gestión</a></li>
+            <li><a id="inicio" href="php/index.php">Inicio</a></li>
+            <li><a href="php/contacto.php">Contacto</a></li>
+            <li><a id="reservaOnline" href="php/reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
+            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2)  ? '' : 'oculto'; ?>"><a id="reservas" href="php/reservas.php">Plazas Reservadas</a></li>
+            <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 0) ? '' : 'oculto'; ?>"><a id="menu_trabajador" href="php/menu_trabajador.php">Horario</a></li>
+            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="php/menu_admin.php">Gestión</a></li>
         </ul>
     </nav>
         <div class="sesion-container">
         <?php
-            include("notificaciones.php");
+            include("php/notificaciones.php");
         ?>
         <div class="sesion-iniciada">
             <p>Bienvenido <?php echo $_COOKIE["nombre"]; ?></p>
@@ -128,7 +128,7 @@
     
     <div class="form-container">
         <div>
-            <form action="menu_admin.php" method="post">
+            <form action="php/menu_admin.php" method="post">
                 <div>
                 <p>Insertar Horario</p>
                 </div>
@@ -185,7 +185,7 @@
             </div>
 
             <div>
-        <form action="menu_admin.php" method="post">
+        <form action="php/menu_admin.php" method="post">
             <div>
                 <p>Eliminar un Horario</p>
             </div>

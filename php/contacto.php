@@ -3,7 +3,7 @@ function cerrarSesion(){
     setcookie("nombre", "", time() - 3600);
     setcookie("id", "", time() - 3600);
     setcookie("admin", "", time() - 3600);
-    header("Location: index.php");
+    header("Location: php/index.php");
     exit();
 }
 
@@ -52,7 +52,7 @@ if(isset($_POST["boton_index"])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oficina de Turismo</title>
-    <link rel="stylesheet" href="contacto.css">
+    <link rel="stylesheet" href="css/contacto.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script>
         function verificarRegistro(event) {
@@ -75,12 +75,12 @@ if(isset($_POST["boton_index"])){
                 </div>
                 <nav>
                     <ul>
-                        <li><a id="inicio" href="index.php">Inicio</a></li>
-                        <li><a id="contacto" href="contacto.php">Contacto</a></li>
-                        <li><a id="reservaOnline" href="reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
-                        <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2) ? '' : 'oculto'; ?>"><a id="reservas" href="reservas.php">Plazas Reservadas</a></li>
-                        <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 0) ? '' : 'oculto'; ?>"><a id="menu_trabajador" href="menu_trabajador.php">Horario</a></li>
-                        <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="menu_admin.php">Gestión</a></li>
+                        <li><a id="inicio" href="php/index.php">Inicio</a></li>
+                        <li><a id="contacto" href="php/contacto.php">Contacto</a></li>
+                        <li><a id="reservaOnline" href="php/reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
+                        <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2) ? '' : 'oculto'; ?>"><a id="reservas" href="php/reservas.php">Plazas Reservadas</a></li>
+                        <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 0) ? '' : 'oculto'; ?>"><a id="menu_trabajador" href="php/menu_trabajador.php">Horario</a></li>
+                        <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="php/menu_admin.php">Gestión</a></li>
                     </ul>
                 </nav>
             </header>
@@ -111,7 +111,7 @@ if(isset($_POST["boton_index"])){
             </footer>
         </div>
     </div>
-    <script src="contacto.js"></script>
+    <script src="js/contacto.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"></script>
 </body>
 </html>
