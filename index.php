@@ -1,77 +1,16 @@
 <?php
-function cerrarSesion(){
-        setcookie("nombre", "", time() - 3600);
-        setcookie("id", "", time() - 3600);
-        setcookie("admin", "", time() - 3600);
-        header("Location:index.php");
-        exit(); // Añadido para asegurar que se detenga la ejecución después de la redirección
-    }
+    require_once 'php/functions.php';
 
-    // Procesamiento de inicio de sesión
-    if(isset($_POST["boton_index"])){
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["boton_index"])) {
         $nombre = $_POST["nombre"];
-        $contraseña = $_POST["contraseña"];
-
-        $mysqli = new mysqli("localhost", "root", "", "parking");
-        if ($mysqli->connect_errno) {
-            echo "<script>alert('Falló la conexión a la base de datos: " . $mysqli->connect_error . "');</script>";
-            exit(); // Añadido para detener la ejecución en caso de error de conexión
-        }
-
-        $consulta = "SELECT id_usuario, nombre, pwd, tipo FROM usuarios WHERE nombre = ?";
-        if($stmt = $mysqli->prepare($consulta)){
-            $stmt->bind_param("s", $nombre);
-            $stmt->execute();
-            $stmt->store_result();
-
-            if($stmt->num_rows == 1){ 
-                $stmt->bind_result($Rid,$Rnombre, $Rcontraseña, $Rtipo);
-                $stmt->fetch(); 
-                if($Rcontraseña == $contraseña){
-                    setcookie("id", $Rid, time() + 3600);
-                    setcookie("nombre", $nombre, time() + 3600);
-
-                    if ($Rtipo == 0){
-                        setcookie("admin", 0, time()+3600);
-                    }
-                    if ($Rtipo == 1){
-                        setcookie("admin", 1, time()+3600);
-                    } 
-                    if ($Rtipo == 2){
-                        setcookie("admin", 2, time()+3600);
-                    }
-                    header("Location:index.php");
-                    exit(); // Añadido para detener la ejecución después de la redirección
-                } else {
-                    echo "<script>alert('Contraseña incorrecta');</script>";
-                }
-            } else {
-                echo "<script>alert('Nombre de trabajador incorrecto');</script>";
-            }
-            $stmt->close();
+        $password = $_POST["contraseña"];
+    
+        if (loginUsuario($nombre, $password)) {
+            // Redirigir para actualizar la sesión
+            header("Location: index.php");
+            exit();
         } else {
-            echo "<script>alert('Error en la consulta: " . $mysqli->error . "');</script>";
-        }
-        $mysqli->close(); // Cerrar la conexión a la base de datos
-    } 
-    if (isset($_POST["boton_registro"])) {
-        $nombre = $_POST["nombre"];
-        $apellidos = $_POST["apellidos"];
-        $email = $_POST["email"];
-        $contraseña = $_POST["password"];
-        $mysqli = new mysqli("localhost", "root", "", "parking");
-        if ($mysqli->connect_errno) {
-            echo "Falló la conexión a la base de datos: " . $mysqli->connect_error;
-        }
-        $consulta = "INSERT INTO usuarios (`Nombre`, `Apellidos`, `pwd`, `e-mail`, `tipo`) VALUES (?, ?, ?, ?, 2)";
-        if($stmt = $mysqli->prepare($consulta)){
-            $stmt->bind_param("ssss", $nombre,$apellidos, $contraseña, $email);
-            $stmt->execute();
-            $stmt->store_result();
-            $stmt->close();
-            echo "Usuario registrado correctamente";
-        } else {
-            echo "Error en la consulta: " . $mysqli->error;
+            echo "<script>alert('Usuario o contraseña incorrectos');</script>";
         }
     }
 ?>
@@ -134,48 +73,48 @@ function cerrarSesion(){
             cerrarSesion();
         }
         } else {
-            // Mostrar el formulario de inicio de sesión
-            ?>
-                    <form   method='post'>  
-                        <div>
-                        <i class="bx bx-user"></i>
-                        <input type="text" id='nombre' name='nombre' placeholder="Usuario">
-                        </div>
-                        <div>
-                        <i class="bx bx-lock"></i>
-                        <input type="password" id='contraseña' name='contraseña' placeholder="Contraseña">
-                        </div>
-                        <input type="submit"id='boton_index' name='boton_index' value="Iniciar sesión">
-                        <button type="button" id="btn-registro">Registrarse</button>
-                    </form>
-
-                    <div id="modal" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <h2>Registro</h2>
-                        <form id="registro-form" action='index.php' method='post'>
-                            <div class="form-group">
-                                <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
-                                <label for="nombre"><i class="bx bx-user"></i></label>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required>
-                                <label for="apellidos"><i class="bx bx-user"></i></label>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" id="email" name="email" placeholder="Email" required>
-                                <label for="email"><i class="bx bx-envelope"></i></label>
-                            </div>
-                            <div class="form-group">
-                                <input type="password" id="password" name="password" placeholder="Contraseña" required>
-                                <label for="password"><i class="bx bx-lock"></i></label>
-                            </div>
-                            <button type="submit" id="boton_registro" name="boton_registro">Registrar</button>
-                        </form>
-                    </div>
-
+        // Mostrar el formulario de inicio de sesión
+        ?>
+            <form   method='post'>  
+                <div>
+                <i class="bx bx-user"></i>
+                <input type="text" id='nombre' name='nombre' placeholder="Usuario">
                 </div>
-            <?php
+                <div>
+                <i class="bx bx-lock"></i>
+                <input type="password" id='contraseña' name='contraseña' placeholder="Contraseña">
+                </div>
+                <input type="submit"id='boton_index' name='boton_index' value="Iniciar sesión">
+                <button type="button" id="btn-registro">Registrarse</button>
+            </form>
+
+            <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Registro</h2>
+                <form id="registro-form" action='index.php' method='post'>
+                    <div class="form-group">
+                        <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+                        <label for="nombre"><i class="bx bx-user"></i></label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required>
+                        <label for="apellidos"><i class="bx bx-user"></i></label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="email" name="email" placeholder="Email" required>
+                        <label for="email"><i class="bx bx-envelope"></i></label>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                        <label for="password"><i class="bx bx-lock"></i></label>
+                    </div>
+                    <button type="submit" id="boton_registro" name="boton_registro">Registrar</button>
+                </form>
+            </div>
+
+        </div>
+        <?php
         }
    
    

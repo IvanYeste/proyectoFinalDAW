@@ -43,36 +43,36 @@
                     document.getElementById("iconButtonBadge").textContent = <?php echo $result->num_rows; ?>
                 </script>
                 <?php
-            while ($row = $result->fetch_assoc()) {
+                    while ($row = $result->fetch_assoc()) {
                 
                 ?>
-                <form method="post" >
-                    <?php                     echo '<p>' . $row["nombre_trabajador"] . ', tienes una solicitud de ' . $row["nombre_trabajador_envia"] . ', quiere cambiar ' . $row["dia_normal"] .'a las '.$row["hora_normal"] .' por ' . $row["dia_a_cambiar"] .'a las '.$row["hora_cambio"] . ', ¿estás de acuerdo?</p>';?>
-                    <input type="hidden" name="id_solicitud" value="<?php echo $row['ID_solicitud']; ?>">
-                    <button type="submit" name="aceptarSolicitud" value="aceptar">Aceptar</button>
-                    <button type="submit" name="rechazarSolicitud" value="rechazar">Rechazar</button>
-                </form>
-                        <?php
+                        <form method="post" >
+                            <?php                     echo '<p>' . $row["nombre_trabajador"] . ', tienes una solicitud de ' . $row["nombre_trabajador_envia"] . ', quiere cambiar ' . $row["dia_normal"] .'a las '.$row["hora_normal"] .' por ' . $row["dia_a_cambiar"] .'a las '.$row["hora_cambio"] . ', ¿estás de acuerdo?</p>';?>
+                            <input type="hidden" name="id_solicitud" value="<?php echo $row['ID_solicitud']; ?>">
+                            <button type="submit" name="aceptarSolicitud" value="aceptar">Aceptar</button>
+                            <button type="submit" name="rechazarSolicitud" value="rechazar">Rechazar</button>
+                        </form>
+                <?php
                     }
+            }else {
+                echo "No hay solicitudes de cambio para este trabajador.";
+            }
+
+            if(isset($_POST["aceptarSolicitud"])){
+                $id_solicitud = $_POST["id_solicitud"];
+                $sql = "UPDATE solicitudes_cambio_horario SET Estado = 'Aceptada' WHERE ID_solicitud = $id_solicitud";
+                $conn->query($sql) ;
+            }
+
+            if(isset($_POST["rechazarSolicitud"])){
+                $id_solicitud = $_POST["id_solicitud"];
+                $sql = "UPDATE solicitudes_cambio_horario SET Estado = 'Rechazada' WHERE ID_solicitud = $id_solicitud";
+                if ($conn->query($sql) === TRUE) {
+                    echo "Solicitud rechazada correctamente";
                 } else {
-                    echo "No hay solicitudes de cambio para este trabajador.";
+                    echo "Error al rechazar la solicitud: " . $conn->error;
                 }
-
-                if(isset($_POST["aceptarSolicitud"])){
-                    $id_solicitud = $_POST["id_solicitud"];
-                    $sql = "UPDATE solicitudes_cambio_horario SET Estado = 'Aceptada' WHERE ID_solicitud = $id_solicitud";
-                    $conn->query($sql) ;
-                }
-
-                if(isset($_POST["rechazarSolicitud"])){
-                    $id_solicitud = $_POST["id_solicitud"];
-                    $sql = "UPDATE solicitudes_cambio_horario SET Estado = 'Rechazada' WHERE ID_solicitud = $id_solicitud";
-                    if ($conn->query($sql) === TRUE) {
-                        echo "Solicitud rechazada correctamente";
-                    } else {
-                        echo "Error al rechazar la solicitud: " . $conn->error;
-                    }
-                }   
+            }   
             ?>
         </div>
     </div>

@@ -1,4 +1,6 @@
-
+<?php
+    require_once 'functions.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,42 +58,7 @@
    
 
     <div class="bloqueCentral">
-    <?php
-    if(isset($_POST['buscar_reservas'])){
-        $fecha_seleccionada = $_POST['fecha'];
-        $mysqli = new mysqli("localhost", "root", "", "parking");
-        if ($mysqli->connect_errno) {
-            echo "Falló la conexión a la base de datos: " . $mysqli->connect_error;
-        }
-        $consulta = "SELECT * FROM reservas WHERE Fecha_inicio <= ? AND Fecha_fin >=?";
-        if($stmt = $mysqli->prepare($consulta)){
-            $stmt->bind_param("ss", $fecha_seleccionada, $fecha_seleccionada);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            if($result->num_rows > 0){
-                echo "<h2>Reservas para el $fecha_seleccionada:</h2>";
-                echo "<table>";
-                echo "<tr><th>ID Reserva</th><th>ID Cliente</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>matricula</th></tr>";
-                while($row = $result->fetch_assoc()){
-                    echo "<tr>";
-                    echo "<td>".$row['ID_reserva']."</td>";
-                    echo "<td>".$row['ID_cliente']."</td>";
-                    echo "<td>".$row['Fecha_inicio']. " / ". $row['hora_inicio']."</td>";
-                    echo "<td>".$row['Fecha_fin']. "/". $row['hora_fin']."</td>";
-                    echo "<td>" .$row['Matricula']."</td>";
-                    echo "</tr>";
-                }
-                echo "</table>";
-            } else {
-                echo "<p>No hay reservas para el $fecha_seleccionada</p>";
-            }
-            $stmt->close();
-        } else {
-            echo "Error en la consulta: " . $mysqli->error;
-        }
-        $mysqli->close();
-    }
-    ?>
+
     </div>
     <div class="bloqueDerecho">
     <h2>Horario de Pago </h2>
@@ -130,13 +97,3 @@
 
 </body>
 </html>
-<?php
-        // Función para cerrar sesión
-        function cerrarSesion(){
-            setcookie("nombre", "", time() - 3600);
-            setcookie("id", "", time() - 3600);
-            setcookie("admin", "", time() - 3600);
-            header("Location: ../index.php");
-            // Redireccionar a la página actual
-        }
-?>

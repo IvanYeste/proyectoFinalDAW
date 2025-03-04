@@ -1,34 +1,6 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "parking");
-            if (isset($_POST['boton_reserva'])) {
-                // Obtener los datos del formulario
-                $fecha_llegada = $_POST['fecha_llegada'];
-                $hora_llegada = $_POST['hora_llegada'];
-                $fecha_salida = $_POST['fecha_salida'];
-                $hora_salida = $_POST['hora_salida'];
-                $matricula = $_POST['matricula'];
-                $id_cliente = $_COOKIE['id'];
-            
-                // Insertar los datos en la tabla de reservas
-                $sql_insert = "INSERT INTO reservas (ID_cliente, Fecha_inicio, hora_inicio,hora_fin, Fecha_fin, Matricula) VALUES (?, ?, ?, ?, ?,?)";
-                if (validarMatricula($matricula)) {
-                    if ($stmt = $mysqli->prepare($sql_insert)) {
-                        $stmt->bind_param("isssss", $id_cliente, $fecha_llegada, $hora_llegada, $hora_salida, $fecha_salida,$matricula);
-                        if ($stmt->execute()) {
-                            echo "Reserva realizada correctamente.";
-                        } else {
-                            echo "Error al realizar la reserva: " . $stmt->error;
-                        }
-                        $stmt->close();
-                    } else {
-                        echo "La matrícula ingresada no es válida. Por favor, ingrese una matrícula válida.";
-                    }
-                } else {
-                    echo "Error en la preparación de la consulta: " . $mysqli->error;
-                }
-                header("Location:reservaOnline.php");
-            }
-            ?>
+    require_once 'functions.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,6 +52,8 @@ $mysqli = new mysqli("localhost", "root", "", "parking");
 
     <div class="bloqueCentral">
     <?php
+        $mysqli = new mysqli("localhost", "root", "", "parking");
+
         $sql_reservas = "SELECT Fecha_inicio, Fecha_fin, hora_inicio, hora_fin FROM reservas WHERE ID_cliente = $_COOKIE[id]";
         if ($stmt = $mysqli->prepare($sql_reservas)) {
             $stmt->execute();
@@ -151,25 +125,3 @@ $mysqli = new mysqli("localhost", "root", "", "parking");
     ?>
 </body>
 </html>
-<?php
-        // Función para cerrar sesión
-        function cerrarSesion(){
-            setcookie("nombre", "", time() - 3600);
-            setcookie("id", "", time() - 3600);
-            setcookie("admin", "", time() - 3600);
-            header("Location: ../index.php");
-            // Redireccionar a la página actual
-        }
-
-function validarMatricula($matricula) {
-    // Expresión regular para una matrícula típica en España (formato XXNNNNXX)
-    $patron = '/^[0-9]{4}[A-Z]{3}$/';
-
-    // Verificar si la matrícula coincide con el patrón
-    if (preg_match($patron, $matricula)) {
-        return true; // La matrícula es válida
-    } else {
-        return false; // La matrícula no es válida
-    }
-}
-?>

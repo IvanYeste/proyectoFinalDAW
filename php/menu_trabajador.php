@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<?php
+    require_once 'functions.php';
+?>
+ç<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -157,51 +160,6 @@ if(isset($_POST["submit_id"])){
     }
 }
 ?>
-
-
-    <?php
-    // Verifica si el formulario ha sido enviado
-    if (isset($_POST['submit_fecha'])) {
-        // Recoge los datos del formulario
-        $id_trabajador_envia = $_COOKIE['id'];
-        $id_trabajador_recibe = $_POST['id_trabajador_recibe'];
-        $fecha_actual = $_POST['fecha_actual'];
-        $hora_actual = $_POST['hora_actual'];
-        $fecha_cambio = $_POST['fecha_cambio'];
-        $hora_cambio = $_POST['hora_cambio'];
-
-        $sql = "SELECT ID_horario FROM Horarios WHERE fecha = '$fecha_actual' AND hora_inicio = '$hora_actual'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $fecha_actual_id = $row['ID_horario'];
-        } else {
-            echo "Error: No se encontró el horario actual en la base de datos.";
-            exit();
-        }
-
-        $sql = "SELECT ID_horario FROM Horarios WHERE fecha = '$fecha_cambio' AND hora_inicio = '$hora_cambio'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $fecha_cambio_id = $row['ID_horario'];
-        } else {
-            echo "Error: No se encontró el horario de cambio en la base de datos.";
-            exit();
-        }
-        $sql = "INSERT INTO Solicitudes_Cambio_Horario (id_trabajador_envia, id_trabajador_recibe, estado, horario_cambio, horario_actual) VALUES ('$id_trabajador_envia', '$id_trabajador_recibe','Pendiente', '$fecha_cambio_id', '$fecha_actual_id')";
-
-        if ($conn->query($sql) === TRUE) {
-            echo "Solicitud insertada correctamente en la base de datos";
-        } else {
-            echo "Error al insertar la solicitud: " . $conn->error;
-        }
-
-        $conn->close();
-    }
-    ?>
 </form>
         </div>
         
@@ -273,109 +231,3 @@ if(isset($_POST["submit_id"])){
     <script src="../js/menu_trabajador.js"></script>
 </body>
 </html>
-<?php
-function obtenerTrabajadores($fecha) {
-    // Conexión a la base de datos 
-    $conn = new mysqli("localhost", "root", "", "parking");
-    if ($conn->connect_errno) {
-        echo "Fallo al conectar a MySQL: " . $mysqli->connect_error;
-        exit();
-    }
-
-    $sql_select = "SELECT * FROM solicitudes_cambio_horario WHERE Estado = 'Aceptada'";
-    $result = $conn->query($sql_select);
-
-    if ($result->num_rows > 0) {
-        // Si hay solicitudes pendientes, procesarlas
-        while ($row = $result->fetch_assoc()) {
-            $id_solicitud = $row['ID_solicitud'];
-            $id_trabajador_envia = $row['ID_trabajador_envia'];
-            $id_trabajador_recibe = $row['ID_trabajador_recibe'];
-            $horario_actual = $row['Horario_actual'];
-            $horario_cambio = $row['Horario_cambio'];
-
-            // Actualizar los horarios de los trabajadores
-            $sql_update_envia = "UPDATE horarios SET ID_trabajador = $id_trabajador_recibe WHERE ID_horario = $horario_actual";
-            $sql_update_recibe = "UPDATE horarios SET ID_trabajador = $id_trabajador_envia WHERE ID_horario = $horario_cambio";
-            $sql_update_solicitud = "UPDATE solicitudes_cambio_horario SET Estado = 'Registrado' WHERE ID_solicitud = $id_solicitud";
-
-            $conn->query($sql_update_envia); 
-            $conn->query($sql_update_recibe);
-            $conn->query($sql_update_solicitud);
-
-           
-        }
-    }
-    //Poner nombres de trabajadores en el calendarioE
-    $trabajadores = array();
-    
-    $consulta = "SELECT DISTINCT  usuarios.Nombre FROM `horarios`INNER JOIN usuarios ON horarios.ID_trabajador = usuarios.ID_usuario where horarios.Fecha=? ORDER BY horarios.Hora_inicio asc";
-    if ($stmt = $conn->prepare($consulta)) {
-        $stmt->bind_param("s", $fecha);
-        $stmt->execute();
-        $stmt->bind_result($id_trabajador);
-        while ($stmt->fetch()) {
-            $trabajadores[] = $id_trabajador;
-        }
-        $stmt->close();
-    }
-    return $trabajadores;
-}
-
-function generarCalendario( $mesActual, $añoActual ) {
-
-    $meses = [
-        1 => "Enero",
-        2 => "Febrero",
-        3 => "Marzo",
-        4 => "Abril",
-        5 => "Mayo",
-        6 => "Junio",
-        7 => "Julio",
-        8 => "Agosto",
-        9 => "Septiembre",
-        10 => "Octubre",
-        11 => "Noviembre",
-        12 => "Diciembre"
-    ];
-
-    $nombreMes = $meses[$mesActual];
-    $primerDiaMes = new DateTime("$añoActual-$mesActual-01");
-    $numeroDiasMes = $primerDiaMes->format('t');
-    $primerDiaSemana = $primerDiaMes->format('N');
-    
-    echo "
-    <div style='display: flex;'>
-        <i class='bx bx-chevron-left' id='prevMonth'></i>
-        <h2>" . $añoActual." ". $nombreMes . "</h2>
-        <i class='bx bx-chevron-right' id='nextMonth'></i>
-    </div>";
-    echo '<table><thead><tr><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th><th>Sábado</th><th>Domingo</th></tr></thead><tbody>';
-
-    $contadorDias = 1;
-
-    for ($i = 0; $i < 6; $i++) {
-        echo '<tr>';
-        for ($j = 0; $j < 7; $j++) {
-            if ($i === 0 && $j < $primerDiaSemana - 1) {
-                echo '<td></td>'; // Espacios en blanco hasta el primer día del mes
-            } elseif ($contadorDias > $numeroDiasMes) {
-                echo '<td></td>'; // Rellenar con espacios en blanco después del último día del mes
-            } else {
-                $fecha = "$añoActual-$mesActual-" . str_pad($contadorDias, 2, "0", STR_PAD_LEFT);
-                $trabajadores = obtenerTrabajadores($fecha);
-                echo '<td>';
-                echo '<strong>' . $contadorDias . '</strong><br><br>';
-                foreach ($trabajadores as $trabajador) {
-                    echo $trabajador . '<br>';
-                }
-                echo '</td>';
-                $contadorDias++;
-            }
-        }
-        echo '</tr>';
-    }
-
-    echo '</tbody></table>';
-}
-?>

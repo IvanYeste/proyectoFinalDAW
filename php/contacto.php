@@ -1,50 +1,5 @@
 <?php
-function cerrarSesion(){
-    setcookie("nombre", "", time() - 3600);
-    setcookie("id", "", time() - 3600);
-    setcookie("admin", "", time() - 3600);
-    header("Location:../index.php");
-    exit();
-}
-
-// Procesamiento de inicio de sesión
-if(isset($_POST["boton_index"])){
-    $nombre = $_POST["nombre"];
-    $contraseña = $_POST["contraseña"];
-
-    $mysqli = new mysqli("localhost", "root", "", "parking");
-    if ($mysqli->connect_errno) {
-        echo "<script>alert('Falló la conexión a la base de datos: " . $mysqli->connect_error . "');</script>";
-        exit();
-    }
-
-    $consulta = "SELECT id_usuario, nombre, pwd, tipo FROM usuarios WHERE nombre = ?";
-    if($stmt = $mysqli->prepare($consulta)){
-        $stmt->bind_param("s", $nombre);
-        $stmt->execute();
-        $stmt->store_result();
-
-        if($stmt->num_rows == 1){ 
-            $stmt->bind_result($Rid, $Rnombre, $Rcontraseña, $Rtipo);
-            $stmt->fetch(); 
-            if($Rcontraseña == $contraseña){
-                setcookie("id", $Rid, time() + 3600);
-                setcookie("nombre", $nombre, time() + 3600);
-                setcookie("admin", $Rtipo, time() + 3600);
-                header("Location: index.php");
-                exit();
-            } else {
-                echo "<script>alert('Contraseña incorrecta');</script>";
-            }
-        } else {
-            echo "<script>alert('Nombre de trabajador incorrecto');</script>";
-        }
-        $stmt->close();
-    } else {
-        echo "<script>alert('Error en la consulta: " . $mysqli->error . "');</script>";
-    }
-    $mysqli->close();
-}
+    require_once 'functions.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,6 +18,22 @@ if(isset($_POST["boton_index"])){
                 alert("Debes Iniciar sesion para acceder a esta sección.");
                 event.preventDefault();
             }
+        }
+        function iniciarMap(){
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 16,
+                center: { lat: 40.619955, lng: -0.101904 },
+                mapTypeId: "terrain",
+            });
+            const marker=[
+                {lat: 40.621384887575175, lng: -0.09908491418811713}
+                ]
+            
+            const newMarker = new google.maps.Marker({
+                position: marker[0],
+                map: map,
+            });
+            newMarker.setMap(map);
         }
     </script>
 </head>
@@ -111,7 +82,6 @@ if(isset($_POST["boton_index"])){
             </footer>
         </div>
     </div>
-    <script src="../js/contacto.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"></script>
 </body>
 </html>
