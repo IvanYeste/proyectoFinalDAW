@@ -2,12 +2,15 @@
 require_once 'config.php';
 
 function cerrarSesion(){
-        setcookie("nombre", "", time() - 3600);
-        setcookie("id", "", time() - 3600);
-        setcookie("admin", "", time() - 3600);
-        header("Location:index.php");
-        exit(); // Añadido para asegurar que se detenga la ejecución después de la redirección
-    }
+    // Eliminar cookies con el mismo path
+    setcookie("nombre", "", time() - 3600, "/");
+    setcookie("id", "", time() - 3600, "/");
+    setcookie("admin", "", time() - 3600, "/");
+
+    // Redirigir para actualizar la página
+    header("Location: index.php");
+    exit();
+}
 
     // 🔹 FUNCION PARA LOGIN
 function loginUsuario($nombre, $password) {
@@ -105,6 +108,54 @@ function insertarHorario($id_trabajador, $fecha, $hora) {
     return false;
 }
 
+// 🔹 Obtener horarios de un trabajador
+function obtenerHorariosTrabajador($id_trabajador) {
+    global $conexion;
+    $sql = "SELECT ID_horario, Fecha, Hora_inicio FROM horarios WHERE ID_trabajador = ?";
+    if ($stmt = $conexion->prepare($sql)) {
+        $stmt->bind_param("i", $id_trabajador);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+    return [];
+}
+
+function eliminarHorario($id_horario) {
+    global $conexion;
+
+    // Iniciar una transacción para evitar problemas
+    $conexion->begin_transaction();
+
+    try {
+        // 1️⃣ Eliminar solicitudes de cambio horario asociadas al horario
+        $sql_delete_solicitudes = "DELETE FROM solicitudes_cambio_horario WHERE Horario_actual = ? OR Horario_cambio = ?";
+        if ($stmt = $conexion->prepare($sql_delete_solicitudes)) {
+            $stmt->bind_param("ii", $id_horario, $id_horario);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        // 2️⃣ Eliminar el horario seleccionado
+        $sql_delete_horario = "DELETE FROM horarios WHERE ID_horario = ?";
+        if ($stmt = $conexion->prepare($sql_delete_horario)) {
+            $stmt->bind_param("i", $id_horario);
+            $stmt->execute();
+            $stmt->close();
+        } else {
+            throw new Exception("Error al preparar la eliminación del horario.");
+        }
+
+        // Confirmar la transacción si todo sale bien
+        $conexion->commit();
+        return true;
+
+    } catch (Exception $e) {
+        $conexion->rollback(); // Revertir cambios si hay error
+        return false;
+    }
+}
+
+
 function obtenerIdHorario($fecha, $hora) {
     global $conexion;
     $sql = "SELECT ID_horario FROM Horarios WHERE fecha = ? AND hora_inicio = ?";
@@ -168,6 +219,7 @@ if (isset($_POST['cerrar_sesion'])) {
 }
 
 function obtenerTrabajadores($fecha) {
+    global $conexion;
     $sql_select = "SELECT * FROM solicitudes_cambio_horario WHERE Estado = 'Aceptada'";
     $result = $conexion->query($sql_select);
 
@@ -204,6 +256,14 @@ function obtenerTrabajadores($fecha) {
         $stmt->close();
     }
     return $trabajadores;
+}
+
+// 🔹 Obtener trabajadores tipo 0 (no administradores)
+function obtenerTrabajadoresNormales() {
+    global $conexion;
+    $sql = "SELECT ID_usuario, nombre FROM usuarios WHERE tipo = 0";
+    $result = $conexion->query($sql);
+    return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 }
 
 function generarCalendario( $mesActual, $añoActual ) {
@@ -274,7 +334,18 @@ function validarMatricula($matricula) {
         return false; // La matrícula no es válida
     }
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["boton_index"])) {
+    $nombre = $_POST["nombre"];
+    $password = $_POST["contraseña"];
 
+    if (loginUsuario($nombre, $password)) {
+        // Redirigir para actualizar la sesión
+        header("Location: index.php");
+        exit();
+    } else {
+        echo "<script>alert('Usuario o contraseña incorrectos');</script>";
+    }
+}
 
 // Procesamiento de registro
 if (isset($_POST["boton_registro"])) {
@@ -284,7 +355,7 @@ if (isset($_POST["boton_registro"])) {
     $contraseña = $_POST["password"];
 
     registrarUsuario($nombre, $apellidos, $email, $conrtaseña);
-}
+}   
 
 if (isset($_POST["Eliminar_trabajador"])) {
 
@@ -359,25 +430,5 @@ if (isset($_POST['boton_reserva'])) {
     header("Location: reservaOnline.php");
 }
 
-if (isset($_POST['buscar_reservas'])) {
-    $fecha_seleccionada = $_POST['fecha'];
-    $reservas = buscarReservas($fecha_seleccionada);
-    if (!empty($reservas)) {
-        echo "<h2>Reservas para el $fecha_seleccionada:</h2>";
-        echo "<table>";
-        echo "<tr><th>ID Reserva</th><th>ID Cliente</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Matrícula</th></tr>";
-        foreach ($reservas as $reserva) {
-            echo "<tr>";
-            echo "<td>{$reserva['ID_reserva']}</td>";
-            echo "<td>{$reserva['ID_cliente']}</td>";
-            echo "<td>{$reserva['Fecha_inicio']} / {$reserva['hora_inicio']}</td>";
-            echo "<td>{$reserva['Fecha_fin']} / {$reserva['hora_fin']}</td>";
-            echo "<td>{$reserva['Matricula']}</td>";
-            echo "</tr>";
-        }
-        echo "</table>";
-    } else {
-        echo "<p>No hay reservas para el $fecha_seleccionada</p>";
-    }
-}
+
 ?>

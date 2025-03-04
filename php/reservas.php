@@ -58,7 +58,29 @@
    
 
     <div class="bloqueCentral">
-
+        <?php
+        if (isset($_POST['buscar_reservas'])) {
+            $fecha_seleccionada = $_POST['fecha'];
+            $reservas = buscarReservas($fecha_seleccionada);
+            if (!empty($reservas)) {
+                echo "<h2>Reservas para el $fecha_seleccionada:</h2>";
+                echo "<table>";
+                echo "<tr><th>ID Reserva</th><th>ID Cliente</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Matrícula</th></tr>";
+                foreach ($reservas as $reserva) {
+                    echo "<tr>";
+                    echo "<td>{$reserva['ID_reserva']}</td>";
+                    echo "<td>{$reserva['ID_cliente']}</td>";
+                    echo "<td>{$reserva['Fecha_inicio']} / {$reserva['hora_inicio']}</td>";
+                    echo "<td>{$reserva['Fecha_fin']} / {$reserva['hora_fin']}</td>";
+                    echo "<td>{$reserva['Matricula']}</td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+            } else {
+                echo "<p>No hay reservas para el $fecha_seleccionada</p>";
+            }
+        }
+        ?>
     </div>
     <div class="bloqueDerecho">
     <h2>Horario de Pago </h2>

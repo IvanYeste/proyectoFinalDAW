@@ -4,6 +4,10 @@ require_once 'functions.php';
 
 $result_trabajadores = obtenerListaTrabajadores();
 ?>
+<!-- Resto del código HTML -->
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +30,7 @@ $result_trabajadores = obtenerListaTrabajadores();
         <ul>
             <li><a id="inicio" href="../index.php">Inicio</a></li>
             <li><a href="../php/contacto.php">Contacto</a></li>
-            <li><a id="reservaOnline" href="php/reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
+            <li><a id="reservaOnline" href="../php/reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
             <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2)  ? '' : 'oculto'; ?>"><a id="reservas" href="../php/reservas.php">Plazas Reservadas</a></li>
             <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 0) ? '' : 'oculto'; ?>"><a id="menu_trabajador" href="../php/menu_trabajador.php">Horario</a></li>
             <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="../php/menu_admin.php">Gestión</a></li>
@@ -65,23 +69,16 @@ $result_trabajadores = obtenerListaTrabajadores();
     
     <div class="form-container">
         <div>
-            <form action="php/menu_admin.php" method="post">
+            <form action="../php/menu_admin.php" method="post">
                 <div>
                 <p>Insertar Horario</p>
                 </div>
                     <label for="id_trabajador">ID del Trabajador :</label><br>
                     <select id="id_trabajador" name="id_trabajador">
-                        <?php
-                            // Iterar sobre los resultados de la consulta para crear las opciones del select
-                            if ($result_trabajadores->num_rows > 0) {
-                                while($row = $result_trabajadores->fetch_assoc()) {
-                                    if($row["tipo"] == 0){
-                                        echo "<option value='" . $row["id_usuario"] . "'>" . $row["nombre"] . "</option>";
-                                    }
-                                }
-                            }
-                        ?>
-                    </select><br>
+                    <?php foreach (obtenerTrabajadoresNormales() as $trabajador): ?>
+                        <option value="<?= $trabajador["ID_usuario"]; ?>"><?= $trabajador["nombre"]; ?></option>
+                    <?php endforeach; ?>
+                </select>
                     
                     <label for="fecha">Fecha :</label><br>
                     <input type="date" id="fecha" name="fecha"><br>
@@ -98,86 +95,45 @@ $result_trabajadores = obtenerListaTrabajadores();
             </div>
 
             <div>
-        <form action="php/menu_admin.php" method="post">
-            <div>
-                <p>Eliminar un Horario</p>
-            </div>
-            <label for="id_trabajador_modificar_horario">ID del Trabajador:
-            <select id="id_trabajador_modificar_horario" name="id_trabajador_modificar_horario">
-                <?php
-                // Consulta para obtener los IDs de los trabajadores
-                $sql_trabajadores = "SELECT ID_usuario, nombre FROM usuarios where tipo = 0";
-                $result_trabajadores = $conn->query($sql_trabajadores);
+        <!-- Formulario para seleccionar trabajador y ver sus horarios -->
+<form action="menu_admin.php" method="post">
+    <p>Eliminar un Horario</p>
 
-                // Iterar sobre los resultados y mostrar opciones en el select
-                if ($result_trabajadores->num_rows > 0) {
-                    while($row = $result_trabajadores->fetch_assoc()) {
-                        echo "<option value='" . $row["ID_usuario"] . "'>"  . $row["nombre"] . "</option>";
-                    }
-                }
-                ?>
-            </select>
-            </label><br>
+    <label>ID del Trabajador:</label>
+    <select id="id_trabajador_modificar_horario" name="id_trabajador_modificar_horario">
+        <?php foreach (obtenerTrabajadoresNormales() as $trabajador): ?>
+            <option value="<?= $trabajador["ID_usuario"]; ?>"><?= $trabajador["nombre"]; ?></option>
+        <?php endforeach; ?>
+    </select>
+    
+    <input type="submit" name="Seleccionar_trabajador_horario" value="Seleccionar">
+</form>
 
-            <input type="submit" name="Seleccionar_trabajador_horario" value="Seleccionar">
-        </form>
+<?php if (isset($_POST["Seleccionar_trabajador_horario"])): ?>
+    <?php $horarios = obtenerHorariosTrabajador($_POST['id_trabajador_modificar_horario']); ?>
+    
+    <!-- Mostrar los horarios del trabajador seleccionado -->
+    <form action="menu_admin.php" method="post">
+        <label>Selecciona el Horario a Eliminar:</label>
+        <select id="id_horario_modificar" name="id_horario_modificar">
+            <?php foreach ($horarios as $horario): ?>
+                <option value="<?= $horario["ID_horario"]; ?>">
+                    <?= $horario["Fecha"] . " " . $horario["Hora_inicio"]; ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <input type="submit" name="Eliminar_horario" value="Eliminar Horario">
+    </form>
+<?php endif; ?>
 
-        <?php
-        if (isset($_POST["Seleccionar_trabajador_horario"])) {
-            $id_trabajador = $_POST['id_trabajador_modificar_horario'];
-            // Consulta para obtener las horas asociadas al trabajador seleccionado
-            $sql_horarios = "SELECT ID_horario, Fecha, Hora_inicio FROM horarios WHERE ID_trabajador = $id_trabajador";
-            $result_horarios = $conn->query($sql_horarios);
-        ?>
-        <form action="menu_admin.php" method="post"><br>
-            <label for="id_horario_modificar">Selecciona el Horario: </label><br>
-            <select id="id_horario_modificar" name="id_horario_modificar">
-                <?php
-                // Iterar sobre los resultados y mostrar opciones en el select
-                if ($result_horarios->num_rows > 0) {
-                    while($row = $result_horarios->fetch_assoc()) {
-                        echo "<option value='" . $row["ID_horario"] . "'>" . $row["Fecha"] . " " . $row["Hora_inicio"] . "</option>";
-                    }
-                }
-                ?>
-            </select><br>
-            <input type="submit" name="Seleccionar_horario" value="Seleccionar">
-        
-            <?php
-            }
-            if(isset($_POST['Seleccionar_horario'])) {
-                // Obtener el ID del horario seleccionado
-                $id_horario = $_POST['id_horario_modificar'];
-                
-                // Verificar la conexión
-                if ($conn->connect_error) {
-                    die("Error de conexión: " . $conn->connect_error);
-                }
-                
-                // Verificar si hay solicitudes de cambio horario asociadas al horario actual o al horario de cambio
-                $sql_count = "SELECT COUNT(*) AS total FROM solicitudes_cambio_horario WHERE Horario_actual = $id_horario OR Horario_cambio = $id_horario";
-                $result = $conn->query($sql_count);
-                
-                if ($result && $row = $result->fetch_assoc()) {
-                    // Si hay solicitudes de cambio horario asociadas, eliminarlas primero
-                    if ($row['total'] > 0) {
-                        $sql_delete_solicitudes = "DELETE FROM solicitudes_cambio_horario WHERE Horario_actual = $id_horario OR Horario_cambio = $id_horario";
-                        $conn->query($sql_delete_solicitudes);
-                    }
-                    
-                    // Ahora puedes eliminar el horario seleccionado
-                    $sql_delete_horario = "DELETE FROM horarios WHERE ID_horario = $id_horario";
-                    if ($conn->query($sql_delete_horario) === TRUE) {
-                        echo "Horario eliminado correctamente.";
-                    } else {
-                        echo "Error al eliminar el horario: " . $conn->error;
-                    }
-                } else {
-                    echo "Error al verificar las solicitudes de cambio horario.";
-                }
-            }
-            ?>
-        </form>
+<?php
+// Acción para eliminar el horario seleccionado
+if (isset($_POST['Eliminar_horario'])) {
+    $id_horario = $_POST['id_horario_modificar'];
+    eliminarHorario($id_horario);
+}
+?>
+
         </div>
 
             <div>

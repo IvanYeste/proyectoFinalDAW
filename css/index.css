@@ -29,7 +29,6 @@ header {
   align-items: center;
   justify-content: space-between;
   border-radius: 20px 20px 0px 0px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 .sesion-iniciada {
   text-align: center;
