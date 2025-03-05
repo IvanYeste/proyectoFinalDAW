@@ -24,7 +24,7 @@ $result_trabajadores = obtenerListaTrabajadores();
     <div class="content">
     <header>
     <div class="logo-container">
-        <img src="../src/logo.png" width="150px" height="150px" alt="Logo" id="logo">
+        <img src="../src/logo.png" width="100px" height="100px" alt="Logo" id="logo">
     </div>
     <nav>
         <ul>
