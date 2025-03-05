@@ -24,20 +24,27 @@ body {
 }
 header {
   background: linear-gradient(90deg, #004AAD, #0088CC);
-  padding: 15px 20px;
+  padding: 1px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-radius: 20px 20px 0px 0px;
 }
+
+.bxs-user-circle {
+  color: #ffffff; /* Cambia el color según tu preferencia */
+  font-size: 50px; /* Ajusta el tamaño si es necesario */
+}
+
 .sesion-iniciada {
   text-align: center;
+  color: #ffffff; /* Cambia el color según tu preferencia */
+
 }
 .sesion-container {
   margin-right: 10px;
-  padding: 8px;
+  padding: 20px;
   display: flex;
-  border-left: 4px solid #70b4e0;
   align-items: center;
 }
 
@@ -62,7 +69,9 @@ header {
   font-size: 24px;
   color: #007bff;width: 30px;
 }
-
+.bxbox-user{
+    color:black;
+}
 .sesion-container form div input[type="text"],
 .sesion-container form div input[type="password"] {
   width: calc(100% - 30px);
@@ -168,12 +177,16 @@ header {
 }
 nav{
   width: 100%;
+  
 }
 nav ul {
+  
   list-style-type: none;
   padding: 0;
   margin: 0;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 nav ul li a {
@@ -181,7 +194,6 @@ nav ul li a {
   text-decoration: none;
   padding: 10px 20px;
   border-radius: 25px;
-  background-color: #0074D9;
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -194,12 +206,13 @@ nav ul li a:hover {
 }
 .containerBloques {
   display: flex; /* Usamos flexbox */
+  background-color: rgba(255, 255, 255, 0.8);
+
 }
 /* Estilos para los enlaces del encabezado */
 
 .bloqueIzquierdo {
   flex: 1;
-  background-color: #f9f9f9;
   padding: 20px;
 }
 .bloqueIzquierdo * {
@@ -209,7 +222,6 @@ nav ul li a:hover {
 .bloqueCentral {
   flex: 3; /* Toma el 60% del espacio disponible */
   padding: 20px;
-  background-color: #f9f9f9;
 }
 #map {
 	height: 500px;
@@ -220,7 +232,6 @@ nav ul li a:hover {
 .bloqueDerecho {
   flex: 1; /* Toma el 20% del espacio disponible */
   padding: 20px;
-  background-color: #f9f9f9;
   text-align: center;
 }
 

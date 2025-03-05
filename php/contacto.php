@@ -38,23 +38,65 @@
     </script>
 </head>
 <body>
-    <div class="imageContainer">
-        <div class="content">
-            <header>
-                <div class="logo-container">
-                    <img src="../src/logo.png" width="150px" height="150px" alt="Logo" id="logo">
+<div class="imageContainer">
+    <div class="content">
+    <header>
+    <div class="logo-container">
+        <img src="../src/logo.png" width="100px" height="100px" alt="Logo" id="logo">
+    </div>
+    <nav>
+        <ul>
+            <li><a id="inicio" href="../index.php">Inicio</a></li>
+            <li><a id="contacto" href="../php/contacto.php">Contacto</a></li>
+            <li><a id="reservaOnline" href="../php/reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
+            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2)  ? '' : 'oculto'; ?>"><a id="reservas" href="../php/reservas.php">Plazas Reservadas</a></li>
+            <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 0) ? '' : 'oculto'; ?>"><a id="menu_trabajador" href="../php/menu_trabajador.php">Horario</a></li>
+            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="../php/menu_admin.php">Gestión</a></li>
+
+        </ul>
+    </nav>
+    <div class="sesion-container">
+    <?php
+        // Verificar si el usuario ha iniciado sesión
+        if(isset($_COOKIE["nombre"])) {
+        ?>
+        <div class="sesion-iniciada">
+            <p>Bienvenido <?php echo $_COOKIE["nombre"]; ?></p>
+            <i class='bx bxs-user-circle'></i>
+            <form action='../index.php' method='post'>
+                <input type='submit' id='cerrar_sesion' name='cerrar_sesion' value='Cerrar Sesión'>
+            </form>
+           
+        </div>
+        <?php
+        // Si se hace clic en el botón de cerrar sesión, llamar a la función cerrarSesion()
+        if(isset($_POST["cerrar_sesion"])) {
+            cerrarSesion();
+        }
+        } else {
+        // Mostrar el formulario de inicio de sesión
+        ?>
+            <form   method='post'>  
+                <div>
+                <i class="bx bx-user"></i>
+                <input type="text" id='nombre' name='nombre' placeholder="Usuario">
                 </div>
-                <nav>
-                    <ul>
-                        <li><a id="inicio" href="../index.php">Inicio</a></li>
-                        <li><a id="contacto" href="../php/contacto.php">Contacto</a></li>
-                        <li><a id="reservaOnline" href="../php/reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
-                        <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2) ? '' : 'oculto'; ?>"><a id="reservas" href="../php/reservas.php">Plazas Reservadas</a></li>
-                        <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 0) ? '' : 'oculto'; ?>"><a id="menu_trabajador" href="../php/menu_trabajador.php">Horario</a></li>
-                        <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="../php/menu_admin.php">Gestión</a></li>
-                    </ul>
-                </nav>
-            </header>
+                <div>
+                <i class="bx bx-lock"></i>
+                <input type="password" id='contraseña' name='contraseña' placeholder="Contraseña">
+                </div>
+                <input type="submit"id='boton_contacto' name='boton_contacto' value="Iniciar sesión">
+                <button type="button" id="btn-registro">Registrarse</button>
+            </form>
+        </div>
+        <?php
+        }
+   
+   
+
+?> 
+    </div>
+    </header>
             <div class="containerBloques">
                     <div class="text-content">
                         <h1>OFICINA DE TURISMO</h1>

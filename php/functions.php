@@ -347,6 +347,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["boton_index"])) {
     }
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["boton_contacto"])) {
+    $nombre = $_POST["nombre"];
+    $password = $_POST["contraseña"];
+
+    if (loginUsuario($nombre, $password)) {
+        // Redirigir para actualizar la sesión
+        header("Location: contacto.php");
+        exit();
+    } else {
+        echo "<script>alert('Usuario o contraseña incorrectos');</script>";
+    }
+}
+
 // Procesamiento de registro
 if (isset($_POST["boton_registro"])) {
     $nombre = $_POST["nombre"];

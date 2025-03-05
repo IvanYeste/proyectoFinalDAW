@@ -27,25 +27,31 @@ body {
   width: 100%;
 }
 header {
-  background-color: #0074D9;
-  color: white;
-  padding: 20px;
+  background: linear-gradient(90deg, #004AAD, #0088CC);
+  padding: 1px 20px;
   display: flex;
   align-items: center;
-  border-top-left-radius: 50px;
-  border-top-right-radius: 50px;
-
+  justify-content: space-between;
+  border-radius: 20px 20px 0px 0px;
 }
+
+.bxs-user-circle {
+  color: #ffffff; /* Cambia el color según tu preferencia */
+  font-size: 50px; /* Ajusta el tamaño si es necesario */
+}
+
 .sesion-iniciada {
   text-align: center;
+  color: #ffffff; /* Cambia el color según tu preferencia */
+
 }
 .sesion-container {
   margin-right: 10px;
-  padding: 8px;
+  padding: 20px;
   display: flex;
-  border-left: 4px solid #70b4e0;
   align-items: center;
 }
+
 
 .sesion-container form {
   max-width: 300px;
@@ -66,7 +72,12 @@ header {
   top: 50%;
   transform: translateY(-50%);
   font-size: 24px;
-  color: #007bff;width: 30px;
+  width: 30px;
+}
+
+
+.bxbox-user{
+  color:black;
 }
 
 .sesion-container form div input[type="text"],
@@ -101,12 +112,16 @@ header {
 }
 nav{
   width: 100%;
+  
 }
 nav ul {
+  
   list-style-type: none;
   padding: 0;
   margin: 0;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 nav ul li a {
@@ -114,13 +129,13 @@ nav ul li a {
   text-decoration: none;
   padding: 10px 20px;
   border-radius: 25px;
-  background-color: #0074D9;
   transition: background-color 0.3s, color 0.3s;
 }
 
 nav ul li a:hover {
   background-color: #328edf;
 }
+
   #reservas {
     background-color: #328edf;
   }
