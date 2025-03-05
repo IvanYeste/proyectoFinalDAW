@@ -11,4 +11,6 @@ $conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($conexion->connect_error) {
     die("Error de conexión: " . $conexion->connect_error);
 }
+
+define('BASE_URL', '/PROYECTOFINALDAW/'); // Ajusta esto según la ruta de tu servidor
 ?>

@@ -22,243 +22,67 @@ body {
   display: none;
 }
 
-.bx  {
-  font-size: 150px;
-  width: 100%;
-}
-header {
-  background: linear-gradient(90deg, #004AAD, #0088CC);
-  padding: 1px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 20px 20px 0px 0px;
-}
 
-.bxs-user-circle {
-  color: #ffffff; /* Cambia el color según tu preferencia */
-  font-size: 50px; /* Ajusta el tamaño si es necesario */
-}
-
-.sesion-iniciada {
-  text-align: center;
-  color: #ffffff; /* Cambia el color según tu preferencia */
-
-}
-.sesion-container {
-  margin-right: 10px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-}
-
-
-.sesion-container form {
-  max-width: 300px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.sesion-container form div {
-  position: relative;
-  margin-bottom: 10px;
-}
-
-.sesion-container form div i {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 24px;
-  width: 30px;
-}
-
-
-.bxbox-user{
-  color:black;
-}
-
-.sesion-container form div input[type="text"],
-.sesion-container form div input[type="password"] {
-  width: calc(100% - 30px);
-  padding: 8px;
-  padding-left: 30px; /* Ajustamos el espacio para los iconos */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-.sesion-container input[type="submit"],
-.sesion-container form #btn-registro {
-  width: 100%;
-  margin-bottom: 10px;
-  background-color: #007bff;
-  color: white;
-  padding: 8px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.sesion-container input[type="submit"]:hover
- {
-  background-color: #0056b3;
-}
-.logo-container {
-  margin-right: 20px;
-}
-nav{
-  width: 100%;
-  
-}
-nav ul {
-  
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 25px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-nav ul li a:hover {
+#reservas {
   background-color: #328edf;
 }
+.containerBloques {
+  display: flex; /* Usamos flexbox */
+}
+/* Estilos para los enlaces del encabezado */
 
-  #reservas {
-    background-color: #328edf;
-  }
-  .containerBloques {
-    display: flex; /* Usamos flexbox */
-  }
-  /* Estilos para los enlaces del encabezado */
-  
-  .bloqueIzquierdo {
-    flex: 1; 
+.bloqueIzquierdo {
+  flex: 1; 
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.bloqueCentral {
+  flex: 3; /* Toma el 60% del espacio disponible */
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+#map {
+    height: 500px;
+    width: 100%;
+}
+
+
+.bloqueDerecho {
+  flex: 1; /* Toma el 20% del espacio disponible */
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="date"],
+select {
+    width: 100%; /* Cambiamos el ancho al 100% */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     box-sizing: border-box;
-    background-color: #f9f9f9;
-    max-width: 800px;
-    padding: 20px;
-  }
-  
-  .bloqueCentral {
-    flex: 3; /* Toma el 60% del espacio disponible */
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #f9f9f9;
-  }
-  #map {
-      height: 500px;
-      width: 100%;
-  }
-  
-  
-  .bloqueDerecho {
-    flex: 1; /* Toma el 20% del espacio disponible */
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #f9f9f9;
-    text-align: center;
-  }
-  form {
-      max-width: 400px;
-      margin: 0 auto;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  input[type="text"],
-  input[type="password"],
-  input[type="email"],
-  input[type="date"],
-  select {
-      width: 100%; /* Cambiamos el ancho al 100% */
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-  }
-  
-  /* Estilos para el botón de envío */
-  input[type="submit"] {
-      background-color: #0074D9; /* Azul */
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 100%;
-      transition: background-color 0.3s; /* Transición suave */
-  }
-  
-  /* Estilos para el botón de envío al pasar el cursor */
-  input[type="submit"]:hover {
-      background-color: #0056b3; /* Azul más oscuro */
-  }
-  
-  
-  .pago {
-    background-color: #FF4136; /* Rojo */
-    color: white; /* Texto blanco */
-  }
-  
-  .no-pago {
-    background-color: #5cd85c; /* Verde */
-    color: white; /* Texto blanco */
-  }
-  .leyenda div {
-    display: inline-block;
-    margin-right: 20px;
-    vertical-align: middle; /* Alineación vertical al centro */
-  }
-  .leyenda .pago {
-    background-color: #FF4136;
-    width: 40px;
-    height: 20px;
-  }
-  .leyenda .no-pago {
-    background-color: #5cd85c   ;
-    width: 40px;
-    height: 20px;
-  }
-  footer {
-    background-color: #0074D9;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
-  
-  }
-  .keyword {
-    font-weight: bold;
-    color: #4479af; /* Azul */
-  
-  }
-  .bloqueCentral h1 {  
-    text-align: center;
-    color: #333;
-  }
-  .bloqueCentral p {
-    color: #666;
-    line-height: 1.6;
-  }/* Estilos para el botón */
-  .btn {
+}
+
+/* Estilos para el botón de envío */
+input[type="submit"] {
     background-color: #0074D9; /* Azul */
     color: white;
     padding: 12px 20px;
@@ -267,31 +91,99 @@ nav ul li a:hover {
     cursor: pointer;
     width: 100%;
     transition: background-color 0.3s; /* Transición suave */
-    }
-    
-    .btn:hover {
-      background-color: #45a049;
-    }
-    
-    /* Estilos para el modal */
-    
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        border: 1px solid #ddd;
-    }
-    th, td {
-        padding: 1px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-    th {
-        background-color: #0074D9;
-        color: white; 
-    }
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-    tr:hover {
-        background-color: #ddd;
-    }
+}
+
+/* Estilos para el botón de envío al pasar el cursor */
+input[type="submit"]:hover {
+    background-color: #0056b3; /* Azul más oscuro */
+}
+
+
+.pago {
+  background-color: #FF4136; /* Rojo */
+  color: white; /* Texto blanco */
+}
+
+.no-pago {
+  background-color: #5cd85c; /* Verde */
+  color: white; /* Texto blanco */
+}
+.leyenda div {
+  display: inline-block;
+  margin-right: 20px;
+  vertical-align: middle; /* Alineación vertical al centro */
+}
+.leyenda .pago {
+  background-color: #FF4136;
+  width: 40px;
+  height: 20px;
+}
+.leyenda .no-pago {
+  background-color: #5cd85c   ;
+  width: 40px;
+  height: 20px;
+}
+footer {
+  background-color: #0074D9;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+
+}
+.keyword {
+  font-weight: bold;
+  color: #4479af; /* Azul */
+
+}
+.bloqueCentral h1 {  
+  text-align: center;
+  color: #333;
+}
+.bloqueCentral p {
+  color: #666;
+  line-height: 1.6;
+}/* Estilos para el botón */
+.btn {
+  background-color: #0074D9; /* Azul */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s; /* Transición suave */
+  }
+  
+  .btn:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilos para el modal */
+  
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
+}
+
+th {
+  background: #004AAD;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+  background: #f2f2f2;
+}

@@ -22,38 +22,7 @@ $result_trabajadores = obtenerListaTrabajadores();
 <body>
     <div class="imageContainer">
     <div class="content">
-    <header>
-    <div class="logo-container">
-        <img src="../src/logo.png" width="100px" height="100px" alt="Logo" id="logo">
-    </div>
-    <nav>
-        <ul>
-            <li><a id="inicio" href="../index.php">Inicio</a></li>
-            <li><a href="../php/contacto.php">Contacto</a></li>
-            <li><a id="reservaOnline" href="../php/reservaOnline.php" onclick="verificarRegistro(event)">Reserva Online</a></li>
-            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] != 2)  ? '' : 'oculto'; ?>"><a id="reservas" href="../php/reservas.php">Plazas Reservadas</a></li>
-            <li class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 0) ? '' : 'oculto'; ?>"><a id="menu_trabajador" href="../php/menu_trabajador.php">Horario</a></li>
-            <li  class="<?php echo (isset($_COOKIE['nombre']) && $_COOKIE['admin'] == 1) ? '' : 'oculto'; ?>"><a id="menu_admin" href="../php/menu_admin.php">Gestión</a></li>
-        </ul>
-    </nav>
-        <div class="sesion-container">
-        <?php
-           if(isset($_COOKIE["nombre"])) {
-            include("notificaciones.php");
-           }
-        ?>
-        <div class="sesion-iniciada">
-            <p>Bienvenido <?php echo $_COOKIE["nombre"]; ?></p>
-            <i class='bx bxs-user-circle'></i>
-            <form action='../index.php' method='post'>
-                <input type='submit' id='cerrar_sesion' name='cerrar_sesion' value='Cerrar Sesión'>
-            </form>
-           
-        </div>
-
-    </div>
-    
-    </header>
+    <?php require_once '../php/header.php'; ?>
     <?php
         $conn = new mysqli("localhost", "root", "", "parking");
 
