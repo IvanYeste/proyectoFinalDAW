@@ -65,16 +65,18 @@
         // Mostrar el formulario de inicio de sesión
         ?>
             <form   method='post'>  
-                <div>
-                <i class="bx bx-user"></i>
-                <input type="text" id='nombre' name='nombre' placeholder="Usuario">
+                    <div>
+                    <i class="bx bx-user"></i>
+                    <input type="text" id='nombre' name='nombre' placeholder="Usuario">
                 </div>
-                <div>
-                <i class="bx bx-lock"></i>
-                <input type="password" id='contraseña' name='contraseña' placeholder="Contraseña">
+                    <div>
+                    <i class="bx bx-lock"></i>
+                    <input type="password" id='contraseña' name='contraseña' placeholder="Contraseña">
                 </div>
-                <input type="submit"id='boton_index' name='boton_index' value="Iniciar sesión">
-                <button type="button" id="btn-registro">Registrarse</button>
+                <div class = "sesion-botones">
+                    <input type="submit"id='boton_index' name='boton_index' value="Iniciar sesión">
+                    <button type="button" id="btn-registro">Registrarse</button>
+                </div>
             </form>
 
             <div id="modal" class="modal">

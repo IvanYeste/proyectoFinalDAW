@@ -53,28 +53,31 @@ header {
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
+  
   justify-content: center;
 }
 
 .sesion-container form div {
   position: relative;
   margin-bottom: 10px;
+
 }
 
 .sesion-container form div i {
   position: absolute;
-  left: 10px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 24px;
-  color: #007bff;width: 30px;
+  color: #007bff;
+  
 }
-.bxbox-user{
-    color:black;
+.sesion-botones
+{
+  display: inline;
+  width: 200px;
 }
 .sesion-container form div input[type="text"],
 .sesion-container form div input[type="password"] {
-  width: calc(100% - 30px);
   padding: 8px;
   padding-left: 30px; /* Ajustamos el espacio para los iconos */
   border: 1px solid #ccc;
@@ -84,13 +87,14 @@ header {
 
 .sesion-container input[type="submit"],
 .sesion-container form #btn-registro {
-  width: 100%;
+  width:95px  ;
   margin-bottom: 10px;
-  background-color: #007bff;
+  background-color: #208bfe;
+  margin: 1px;
   color: white;
   padding: 8px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
