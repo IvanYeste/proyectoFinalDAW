@@ -40,7 +40,7 @@ Para ejecutar este proyecto en local, sigue estos pasos:
 2️⃣ **Configurar la Base de Datos**  
    - Abre `http://localhost/phpmyadmin/`.  
    - Crea una base de datos llamada `parking`.  
-   - Importa el archivo `parking.sql` ubicado en la carpeta `src/`.
+   - Importa el archivo `parking.sql` ubicado en la carpeta.
 
 3️⃣ **Colocar el Proyecto en XAMPP**  
    - Copia la carpeta del proyecto en `C:\xampp\htdocs\proyectoFinalDAW\`.
