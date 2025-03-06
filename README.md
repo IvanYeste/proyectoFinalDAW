@@ -4,8 +4,11 @@ Este es un proyecto que desarrollé en 2023 como parte de mi Proyecto Final de C
 
 ⚠️ **IMPORTANTE:**  
 Este proyecto refleja mis conocimientos en ese momento y no es un sistema perfecto ni profesional. Fue una experiencia de aprendizaje y es posible que tenga errores o aspectos mejorables.
-Para acceder a las funcionalidades de administrador hay que inicar sesion con el **Usuario: admin y contraseña: admin**. Asi podras insertar treabajdores, horarios tanto como eliminarlos.
+
+Para acceder a las funcionalidades de administrador hay que inicar sesion con el Usuario: admin y Contraseña: admin. Asi podras tanto insertar treabajdores y horarios como eliminarlos.
+
 Una vez creado un trabajador para acceder a sus funcionalidades deves inicar sesion con su nombre y contraseña.
+
 ---
 
 ## ✨ **Características**
