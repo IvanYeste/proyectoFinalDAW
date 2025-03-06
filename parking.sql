@@ -183,6 +183,7 @@ INSERT INTO `usuarios` (`ID_usuario`, `Nombre`, `Apellidos`, `pwd`, `e-mail`, `t
 (72, 'Olga', 'Garcia', '123', 'i@i.com', '0'),
 (73, 'Tania', 'Ripolles', '123', 'i@i.com', '0'),
 (74, 'w', 'w', 'w', 'w', '2');
+(75, 'Admin', 'Admin', 'admin', 'que@qwe', '1');
 
 --
 -- Índices para tablas volcadas
